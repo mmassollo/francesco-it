@@ -1,5 +1,3 @@
-// chat.js
-
 const level = localStorage.getItem("level");
 const sceneKey = (localStorage.getItem("scene") || "").toLowerCase();
 
@@ -12,16 +10,13 @@ const sceneMap = {
 
 window.addEventListener("DOMContentLoaded", () => {
   const skyImg = document.getElementById("skyTexture");
-  if (sceneKey && sceneMap[sceneKey]) {
-    skyImg.setAttribute("src", sceneMap[sceneKey]);
-  } else {
-    console.error("No se encontró la escena:", sceneKey);
-  }
+  if (sceneKey && sceneMap[sceneKey]) skyImg.setAttribute("src", sceneMap[sceneKey]);
+  else console.error("No se encontró la escena:", sceneKey);
 
-  const micBtn = document.getElementById("micBtn");
+  const chatLog = document.getElementById("chatLog");
   const endBtn = document.getElementById("endBtn");
   const openFrancescoBtn = document.getElementById("openFrancesco");
-  const chatLog = document.getElementById("chatLog");
+  const francescoFace = document.getElementById("francescoFace");
 
   function pushMsg(sender, text) {
     const p = document.createElement("p");
@@ -31,16 +26,32 @@ window.addEventListener("DOMContentLoaded", () => {
     chatLog.scrollTop = chatLog.scrollHeight;
   }
 
-  micBtn.addEventListener("click", () => {
-    if (!recognizer) return alert("Reconocimiento de voz no disponible.");
-    recognizer.start();
-    pushMsg("Sistema", "🎤 Micrófono activado, podés hablar libremente.");
-  });
+  // Animaciones: parpadeo y gestos de cabeza
+  function startBlinking(faceElem) {
+    setInterval(() => {
+      faceElem.classList.add("blink");
+      setTimeout(() => faceElem.classList.remove("blink"), 200);
+    }, Math.random() * 3000 + 3000);
+  }
 
+  function headGesture(faceElem) {
+    faceElem.style.transform = "translateX(-50%) rotateZ(3deg)";
+    setTimeout(() => { faceElem.style.transform = "translateX(-50%) rotateZ(-3deg)"; }, 200);
+    setTimeout(() => { faceElem.style.transform = "translateX(-50%) rotateZ(0deg)"; }, 400);
+  }
+
+  startBlinking(francescoFace);
+
+  // STT automático
   if (recognizer) {
+    recognizer.start();
+
     recognizer.onresult = async (event) => {
       const text = event.results[event.results.length - 1][0].transcript;
       pushMsg("Tu", text);
+
+      francescoFace.classList.add("talking");
+      headGesture(francescoFace);
 
       try {
         const resp = await fetch("/api/chat", {
@@ -51,27 +62,39 @@ window.addEventListener("DOMContentLoaded", () => {
         const data = await resp.json();
         if (data.reply) {
           pushMsg("Francesco", data.reply);
-          speak(data.reply);
+          speechSynthesis.cancel();
+          const utter = new SpeechSynthesisUtterance(data.reply);
+          utter.lang = "it-IT";
+          utter.rate = 1;
+          utter.onend = () => francescoFace.classList.remove("talking");
+          speechSynthesis.speak(utter);
         }
       } catch (err) {
-        console.error("Error API:", err);
-        pushMsg("Sistema", "Errore nella comunicazione con l'IA.");
+        console.error(err);
+        pushMsg("Sistema", "Errore comunicazione IA");
+        francescoFace.classList.remove("talking");
       }
     };
   }
 
+  // Terminar sesión
   endBtn.addEventListener("click", () => {
     const bye = "Sessione terminata. Torniamo al menu.";
     pushMsg("Francesco", bye);
-    speak(bye);
-    setTimeout(() => {
+    const utter = new SpeechSynthesisUtterance(bye);
+    utter.lang = "it-IT";
+    utter.onend = () => {
       localStorage.clear();
       window.location.href = "/index.html";
-    }, 2000);
+    };
+    speechSynthesis.speak(utter);
   });
 
   openFrancescoBtn.addEventListener("click", () => {
-    window.open("https://chatgpt.com/g/g-68404c27250c819198c20b64e40e8788-francesco-il-tuo-amico-italiano",
-                "_blank", "noopener");
+    window.open(
+      "https://chatgpt.com/g/g-68404c27250c819198c20b64e40e8788-francesco-il-tuo-amico-italiano",
+      "_blank",
+      "noopener"
+    );
   });
 });

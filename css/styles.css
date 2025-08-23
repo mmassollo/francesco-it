@@ -1,73 +1,80 @@
-:root {
-  --bg: #0b0f19;
-  --panel: #121826;
-  --accent: #4f8cff;
-  --accent-2: #00c2a8;
-  --text: #e8eefc;
-  --muted: #9db0d1;
-  --danger: #e45858;
+/* UI general */
+#ui {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none; /* Para que no bloquee A-Frame */
 }
 
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; height: 100%; background: var(--bg); color: var(--text); font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial; }
-
-.page header { padding: 24px 16px 8px; text-align: center; }
-.page header h1 { margin: 0 0 8px; font-size: 28px; }
-.page header p { margin: 0; color: var(--muted); }
-
-.level-carousel { display: flex; gap: 12px; padding: 20px; overflow-x: auto; justify-content: center; flex-wrap: wrap; }
-.level-bubble {
-  border: none; border-radius: 999px; padding: 14px 24px; font-size: 18px;
-  color: var(--text); background: #1c2437; cursor: pointer; transition: transform .12s, background .12s;
+/* Top & bottom bars */
+.top-bar, .bottom-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  pointer-events: auto;
 }
-.level-bubble.active, .level-bubble:hover { background: var(--accent); transform: translateY(-2px); }
 
-.thumb-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; padding: 20px; max-width: 900px; margin: 0 auto; }
-.thumb { background: #141b2b; border-radius: 16px; padding: 8px; cursor: pointer; border: 2px solid transparent; }
-.thumb:hover { border-color: var(--accent); }
-.thumb img { width: 100%; height: 120px; object-fit: cover; border-radius: 12px; display: block; }
-.thumb span { display: block; text-align: center; margin: 8px 0 4px; color: var(--text); }
-
-.btn {
-  background: var(--accent); color: white; border: none; border-radius: 12px;
-  padding: 12px 18px; font-size: 16px; cursor: pointer; transition: filter .12s;
+/* Chat log */
+#chatLog {
+  max-height: 150px;
+  overflow-y: auto;
+  width: 90%;
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  font-family: sans-serif;
 }
-.btn:hover { filter: brightness(1.1); }
-.btn:disabled { opacity: .5; cursor: not-allowed; }
-.btn-secondary { background: #2a3350; }
-.btn-danger { background: var(--danger); }
-.btn-mic { font-size: 18px; }
 
-.cta { display: flex; gap: 12px; justify-content: center; padding: 16px 20px 28px; }
+.msg-user { color: #00ffcc; }
+.msg-bot  { color: #ffff66; }
 
-footer { text-align: center; color: var(--muted); padding: 10px; }
+/* Cara Francesco */
+.francesco-face-container {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 100px;
+  pointer-events: none;
+}
 
-.page-chat a-scene { position: fixed; inset: 0; }
-.topbar {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 10; background: linear-gradient(180deg, rgba(11,15,25,.9), rgba(11,15,25,.2));
-  display: flex; justify-content: space-between; align-items: center; padding: 10px 12px;
+#francescoFace {
+  width: 100%;
+  transition: transform 0.1s;
+  position: relative;
 }
-.topbar .info { color: var(--muted); }
-.topbar .topbar-actions { display: flex; gap: 8px; }
 
-.chat-overlay {
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: 12; padding: 8px;
-  display: grid; grid-template-rows: 1fr auto; max-height: 55vh;
+/* Boca hablando */
+#francescoFace.talking {
+  transform: scaleY(1.2) translateY(2px);
 }
-.messages {
-  background: rgba(18,24,38,.72); backdrop-filter: blur(6px);
-  border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 10px; overflow-y: auto;
-}
-.msg { display: flex; margin: 6px 0; }
-.msg .bubble {
-  padding: 10px 12px; border-radius: 16px; max-width: 78%; line-height: 1.35;
-  background: #1b2336; color: var(--text);
-}
-.msg.me { justify-content: flex-end; }
-.msg.me .bubble { background: #243155; }
-.msg.bot .bubble { background: #162436; }
 
-.voice-controls {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 8px;
+/* Parpadeo ojos con pseudo-elementos */
+#francescoFace::before,
+#francescoFace::after {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 4px;
+  background: #000;
+  top: 30px;
+  border-radius: 50%;
+  opacity: 0;
 }
-.hint { color: var(--muted); font-size: 14px; }
+
+#francescoFace::before { left: 25px; }
+#francescoFace::after  { right: 25px; }
+
+#francescoFace.blink::before,
+#francescoFace.blink::after {
+  opacity: 1;
+}
