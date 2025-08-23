@@ -1,32 +1,58 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat con Francesco</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pratica con Francesco</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 </head>
-<body>
-  <div class="chat-container">
-    <!-- Cara de Francesco -->
-    <div class="francesco-face">
-      <img src="images/francesco-face.png" alt="Francesco">
+<body class="page page-chat">
+
+  <!-- Overlay: barra superior -->
+  <div class="topbar">
+    <div class="info">
+      <span id="labelLevel">—</span> · <span id="labelScene">—</span>
     </div>
-
-    <!-- Botones superiores -->
-    <div class="chat-top-buttons">
-      <button class="btn-speak" id="speakBtn">🎤 Parlare</button>
-      <button class="btn-exit" onclick="endChat()">❌ Terminare</button>
+    <div class="topbar-actions">
+      <button id="openFrancesco" class="btn btn-secondary">Abrir Francesco</button>
+      <button id="endBtn" class="btn btn-danger">Terminar</button>
     </div>
-
-    <!-- Mensajes -->
-    <div id="chat-box" class="chat-box"></div>
-
-    <!-- Texto de salida -->
-    <p class="exit-hint">Di "Ci vediamo Francesco" per uscire</p>
   </div>
 
-  <script src="js/voice.js"></script>
-  <script src="js/chat.js"></script>
+  <!-- Escena A-Frame 360 -->
+  <a-scene vr-mode-ui="enabled: true" embedded>
+    <a-assets>
+      <img id="skyTexture" crossorigin="anonymous">
+    </a-assets>
+    <a-sky id="sky" src="#skyTexture" rotation="0 -90 0"></a-sky>
+    <a-camera look-controls="magicWindowTrackingEnabled: true"></a-camera>
+  </a-scene>
+  <!-- UI principal -->
+  <div id="ui">
+    <div class="top-bar">
+      <button id="endBtn" class="btn btn-danger">Terminar</button>
+      <button id="openFrancesco" class="btn btn-secondary">Abrir Francesco</button>
+    </div>
+    <div class="francesco-face-container">
+      <img id="francescoFace" src="/images/francesco-face.png" />
+    </div>
+    <div class="bottom-bar">
+      <div id="chatLog"></div>
+    </div>
+  </div>
+
+  <!-- Overlay: panel estilo WhatsApp (solo visual) -->
+  <div class="chat-overlay" id="chatOverlay">
+    <div class="messages" id="messages"></div>
+
+    <div class="voice-controls">
+      <button id="micBtn" class="btn btn-mic">🎙️ Parla</button>
+      <span class="hint">Di “<b>Ci vediamo Francesco</b>” per uscire.</span>
+    </div>
+  </div>
+
+  <script src="/js/voice.js"></script>
+  <script src="/js/chat.js"></script>
 </body>
 </html>
