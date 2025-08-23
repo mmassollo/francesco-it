@@ -17,24 +17,26 @@
 
     <a-entity id="avatar"
       gltf-model="#avatarModel"
-      position="0 0 -3"
+      position="0 0 -15"
       rotation="0 180 0"
-      scale="0.1 0.1 0.1">
+      scale="0.01 0.01 0.01">
     </a-entity>
 
     <a-camera look-controls="magicWindowTrackingEnabled: true"></a-camera>
   </a-scene>
 
-  <div id="ui" style="position:absolute; bottom:20px; left:50%; transform:translateX(-50%);
-                      background:rgba(0,0,0,0.5); padding:10px; border-radius:10px; color:#fff;
-                      display:flex; gap:10px; flex-direction:column; align-items:center;">
-    <button id="micBtn">🎤 Hablar</button>
-    <button id="endBtn">Terminar</button>
-    <button id="openFrancesco">Abrir Francesco</button>
-    <div id="chatLog" style="max-height:100px; overflow-y:auto; width:200px; background:#fff; color:#000; padding:5px; border-radius:5px;"></div>
+  <!-- UI principal -->
+  <div id="ui">
+    <div class="top-bar">
+      <button id="endBtn" class="btn btn-danger">Terminar</button>
+      <button id="openFrancesco" class="btn btn-secondary">Abrir Francesco</button>
+    </div>
+    <div class="bottom-bar">
+      <button id="micBtn" class="btn btn-primary">🎤 Hablar</button>
+      <div id="chatLog"></div>
+    </div>
   </div>
 
-  <!-- Importamos scripts simples -->
   <script src="/js/voice.js"></script>
   <script src="/js/chat.js"></script>
 </body>
