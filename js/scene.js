@@ -5,7 +5,6 @@ const thumbs = [...document.querySelectorAll(".thumb")];
 let selected = null;
 
 if (!localStorage.getItem("level")) {
-  // Si no eligió nivel, volver
   window.location.replace("/index.html");
 }
 

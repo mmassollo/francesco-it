@@ -17,6 +17,3 @@ btn.addEventListener("click", () => {
   localStorage.setItem("level", selected);
   window.location.href = "/scene.html";
 });
-
-// Si ya hay nivel y escena guardados (regreso), opcionalmente podrías continuar.
-// Lo dejamos simple: siempre empezar desde acá.
