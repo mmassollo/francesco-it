@@ -64,19 +64,31 @@ button:hover {
   margin-bottom: 20px;
 }
 
-/* Escenas */
-.scene-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  margin: 20px 0;
+/* Contenedor de cada escena */
+.scene-item {
+  width: 100%; /* Ocupa todo el espacio de la celda de la grilla */
+  max-width: none; /* Elimina límite máximo para adaptarse a la grilla */
+  border-radius: 10px;
+  overflow: hidden; /* Evita que las imágenes se desborden */
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: transform 0.2s;
+  box-sizing: border-box; /* Incluye padding y border en el cálculo del tamaño */
 }
 
 .scene-item:hover {
   transform: scale(1.03);
 }
 
+/* Imágenes dentro de cada escena */
+.scene-item img {
+  width: 100%;
+  height: 200px; /* Altura fija para uniformidad */
+  object-fit: cover; /* Recorta las imágenes para que quepan sin distorsión */
+  display: block;
+}
+
+/* Texto debajo de la imagen */
 .scene-item p {
   background-color: #007bff;
   color: white;
@@ -86,17 +98,12 @@ button:hover {
   font-weight: bold;
 }
 
-.scene-item img {
+/* Contenedor principal */
+.container {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
-  display: block;
-}
-
-.scene-item {
-  width: 100%;
-  max-width: none;
-  box-sizing: border-box;
+  max-width: 600px; /* Límite razonable para pantallas móviles y grandes */
+  padding: 20px;
+  box-sizing: border-box; /* Incluye padding en el cálculo del tamaño */
 }
 
 /* CHAT */
