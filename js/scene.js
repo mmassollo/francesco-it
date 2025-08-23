@@ -1,6 +1,6 @@
 const goBtn = document.getElementById("goBtn");
 const backBtn = document.getElementById("backBtn");
-const thumbs = [...document.querySelectorAll(".thumb")];
+const thumbs = [...document.querySelectorAll(".scene-item")];
 
 let selected = null;
 

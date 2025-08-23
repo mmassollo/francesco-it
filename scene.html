@@ -3,34 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Seleziona Scena</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <title>Scegli Scenario</title>
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
   <div class="container">
     <h1>Scegli uno scenario</h1>
-    <div id="scene-list" class="scene-list">
-      <div class="thumb" data-scene="citta">
-        <img src="/images/thumbnails/citta-thumb.jpg" alt="Città" />
-        <span>Città</span>
+    <div class="scene-list button-grid">
+      <div class="scene-item thumb" data-scene="citta">
+        <img src="/images/thumbnails/citta-thumb.jpg" alt="Città">
+        <p>Città</p>
       </div>
-      <div class="thumb" data-scene="colosseo">
-        <img src="/images/thumbnails/colosseo-thumb.jpg" alt="Colosseo" />
-        <span>Colosseo</span>
+      <div class="scene-item thumb" data-scene="colosseo">
+        <img src="/images/thumbnails/colosseo-thumb.jpg" alt="Colosseo">
+        <p>Colosseo</p>
       </div>
-      <div class="thumb" data-scene="albergo">
-        <img src="/images/thumbnails/albergo-thumb.jpg" alt="Albergo" />
-        <span>Albergo</span>
+      <div class="scene-item thumb" data-scene="albergo">
+        <img src="/images/thumbnails/albergo-thumb.jpg" alt="Albergo">
+        <p>Albergo</p>
       </div>
-      <div class="thumb" data-scene="spiaggia">
-        <img src="/images/thumbnails/spiaggia-thumb.jpg" alt="Spiaggia" />
-        <span>Spiaggia</span>
+      <div class="scene-item thumb" data-scene="spiaggia">
+        <img src="/images/thumbnails/spiaggia-thumb.jpg" alt="Spiaggia">
+        <p>Spiaggia</p>
       </div>
     </div>
-    <button class="btn-main" onclick="goToChat()">Inizia</button>
+    <button id="goBtn" disabled>Inizia</button>
+    <button id="backBtn">Indietro</button>
   </div>
-
-  <script src="js/scene.js"></script>
-  <script src="js/data.js"></script>
+  <script src="/js/scene.js"></script>
 </body>
 </html>
