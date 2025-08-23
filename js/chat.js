@@ -1,14 +1,15 @@
 // chat.js
 
 const level = localStorage.getItem("level");
-const sceneKey = localStorage.getItem("scene");
 
 const sceneMap = {
-  "Città": "/images/scenes/citta-360.jpg",
-  "Colosseo": "/images/scenes/colosseo-360.jpg",
-  "Albergo": "/images/scenes/albergo-360.jpg",
-  "Spiaggia": "/images/scenes/spiaggia-360.jpg"
+  "città": "/images/scenes/citta-360.jpg",
+  "colosseo": "/images/scenes/colosseo-360.jpg",
+  "albergo": "/images/scenes/albergo-360.jpg",
+  "spiaggia": "/images/scenes/spiaggia-360.jpg"
 };
+
+const sceneKey = (localStorage.getItem("scene") || "").toLowerCase();
 
 window.addEventListener("DOMContentLoaded", () => {
   console.log("Chat page loaded, level:", level, "scene:", sceneKey);
