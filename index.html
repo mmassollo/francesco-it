@@ -12,15 +12,15 @@
     <p>Scegli il tuo livello per iniziare</p>
 
     <div class="button-grid">
-      <button onclick="selectLevel('A1')">A1</button>
-      <button onclick="selectLevel('A2')">A2</button>
-      <button onclick="selectLevel('B1')">B1</button>
-      <button onclick="selectLevel('B2')">B2</button>
-      <button onclick="selectLevel('C1')">C1</button>
-      <button onclick="selectLevel('C2')">C2</button>
+      <button class="level-bubble" data-level="A1">A1</button>
+      <button class="level-bubble" data-level="A2">A2</button>
+      <button class="level-bubble" data-level="B1">B1</button>
+      <button class="level-bubble" data-level="B2">B2</button>
+      <button class="level-bubble" data-level="C1">C1</button>
+      <button class="level-bubble" data-level="C2">C2</button>
     </div>
 
-    <button class="btn-main" onclick="goToScenes()">Continua</button>
+    <button id="continueBtn" class="btn-main">Continua</button>
   </div>
 
   <script src="js/index.js"></script>
