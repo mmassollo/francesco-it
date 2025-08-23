@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Scegli lo scenario</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body class="page page-scene">
+  <header>
+    <h1>Scegli lo scenario</h1>
+    <p>Seleziona dove praticare con Francesco</p>
+  </header>
+
+  <main>
+    <div class="thumb-grid">
+      <div class="thumb" data-scene="citta">
+        <img src="/images/thumbnails/citta-thumb.jpg" alt="Città" />
+        <span>Città</span>
+      </div>
+      <div class="thumb" data-scene="colosseo">
+        <img src="/images/thumbnails/colosseo-thumb.jpg" alt="Colosseo" />
+        <span>Colosseo</span>
+      </div>
+      <div class="thumb" data-scene="albergo">
+        <img src="/images/thumbnails/albergo-thumb.jpg" alt="Albergo" />
+        <span>Albergo</span>
+      </div>
+      <div class="thumb" data-scene="spiaggia">
+        <img src="/images/thumbnails/spiaggia-thumb.jpg" alt="Spiaggia" />
+        <span>Spiaggia</span>
+      </div>
+    </div>
+
+    <div class="cta">
+      <button id="backBtn" class="btn btn-secondary">Indietro</button>
+      <button id="goBtn" class="btn" disabled>Inizia</button>
+    </div>
+  </main>
+
+  <footer><small>MVP • A-Frame + STT/TTS</small></footer>
+  <script src="/js/data.js"></script>
+  <script src="/js/scene.js"></script>
+</body>
+</html>

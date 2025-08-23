@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pratica con Francesco</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+</head>
+<body class="page page-chat">
+
+  <!-- Overlay: barra superior -->
+  <div class="topbar">
+    <div class="info">
+      <span id="labelLevel">—</span> · <span id="labelScene">—</span>
+    </div>
+    <div class="topbar-actions">
+      <button id="openFrancesco" class="btn btn-secondary">Abrir Francesco</button>
+      <button id="endBtn" class="btn btn-danger">Terminar</button>
+    </div>
+  </div>
+
+  <!-- Escena A-Frame 360 -->
+  <a-scene vr-mode-ui="enabled: true" embedded>
+    <a-assets>
+      <img id="skyTexture" src="" crossorigin="anonymous" />
+      <a-asset-item id="avatarModel" src="/models/avatar.glb"></a-asset-item>
+    </a-assets>
+
+    <a-sky id="sky" src="#skyTexture" rotation="0 -90 0"></a-sky>
+
+    <!-- Avatar al centro -->
+    <a-entity id="avatar"
+      gltf-model="#avatarModel"
+      position="0 1.2 -2"
+      rotation="0 0 0"
+      scale="1 1 1">
+    </a-entity>
+
+    <!-- Cámara con look-controls (giroscopio en móvil) -->
+    <a-entity camera look-controls wasd-controls="enabled:false" position="0 1.6 0"></a-entity>
+  </a-scene>
+
+  <!-- Overlay: panel estilo WhatsApp (solo visual) -->
+  <div class="chat-overlay" id="chatOverlay">
+    <div class="messages" id="messages"></div>
+
+    <div class="voice-controls">
+      <button id="micBtn" class="btn btn-mic">🎙️ Hablar</button>
+      <span class="hint">Dí “<b>Ci vediamo Francesco</b>” para terminar.</span>
+    </div>
+  </div>
+
+  <!-- Nota: no usamos iframe por restricciones; abrimos nueva pestaña -->
+  <script src="/js/data.js"></script>
+  <script src="/js/voice.js"></script>
+  <script src="/js/chat.js"></script>
+</body>
+</html>
