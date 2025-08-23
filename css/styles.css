@@ -1,103 +1,70 @@
-/* Fondo general azul */
+/* Fondo general */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   background-color: #007bff;
   color: white;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   height: 100vh;
+  text-align: center;
 }
 
-/* Contenedor principal centrado */
+/* Contenedores */
 .container {
-  text-align: center;
+  width: 100%;
+  max-width: 600px;
   padding: 20px;
 }
 
-/* Botones amarillos grandes */
+/* Títulos */
+h1 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+p {
+  margin-bottom: 20px;
+  font-size: 1.2em;
+}
+
+/* Botones generales */
 button {
-  background-color: #ffcc00;
+  background-color: #ffc107;
   border: none;
-  border-radius: 10px;
-  padding: 15px 30px;
-  font-size: 18px;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 1.2em;
   font-weight: bold;
-  margin: 10px;
   cursor: pointer;
-  transition: transform 0.2s;
+  margin: 5px;
+  transition: background 0.3s;
 }
 
 button:hover {
-  transform: scale(1.05);
+  background-color: #e0a800;
 }
 
-button:active {
-  transform: scale(0.95);
-}
-
-/* Botones especiales */
-button.termina {
-  background-color: #28a745; /* verde */
+.btn-main {
+  background-color: #28a745;
   color: white;
+  margin-top: 20px;
 }
 
-button.parlare {
-  background-color: #ffcc00; /* amarillo */
-  color: black;
+.btn-main:hover {
+  background-color: #218838;
 }
 
-button.apri {
-  background-color: #17a2b8; /* celeste */
-  color: white;
+/* Botones en grid */
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-/* Layout en chat.html */
-.chat-header {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  right: 10px;
-  display: flex;
-  justify-content: space-between;
-  z-index: 100;
-}
-
-.chat-footer {
-  position: absolute;
-  bottom: 20px;
-  width: 100%;
-  text-align: center;
-  z-index: 100;
-}
-
-.chat-box {
-  position: absolute;
-  top: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: 600px;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  padding: 10px;
-  border-radius: 10px;
-  max-height: 200px;
-  overflow-y: auto;
-  font-size: 16px;
-}
-
-/* Francesco face */
-.francesco-face {
-  display: block;
-  margin: 80px auto 20px auto;
-  width: 150px;
-  height: auto;
-}
-
-/* Lista de escenas */
+/* Escenas */
 .scene-list {
   display: flex;
   flex-direction: column;
@@ -133,4 +100,51 @@ button.apri {
   padding: 10px;
   text-align: center;
   font-weight: bold;
+}
+
+/* CHAT */
+.chat-container {
+  width: 100%;
+  max-width: 800px;
+  padding: 20px;
+  text-align: center;
+}
+
+.francesco-face img {
+  width: 150px;
+  margin: 10px auto;
+  display: block;
+}
+
+.chat-top-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.btn-speak {
+  background-color: #ffc107;
+}
+
+.btn-exit {
+  background-color: #dc3545;
+  color: white;
+}
+
+.chat-box {
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 10px;
+  padding: 15px;
+  min-height: 150px;
+  margin-bottom: 20px;
+  text-align: left;
+  font-size: 1em;
+  overflow-y: auto;
+}
+
+.exit-hint {
+  font-style: italic;
+  font-size: 1em;
+  color: #fff;
+  opacity: 0.8;
 }
