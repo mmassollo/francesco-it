@@ -152,3 +152,30 @@ button:hover {
   color: #fff;
   opacity: 0.8;
 }
+
+/* Cara Francesco */
+.francesco-face-container {
+  position: absolute;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 80px;
+  pointer-events: none;
+}
+
+#francescoFace {
+  width: 100%;
+  transition: transform 0.1s;
+  position: relative;
+}
+
+#francescoFace.talking {
+  transform: scaleY(1.2) translateY(2px);
+}
+
+/* Parpadeo */
+#francescoFace.blink::before,
+#francescoFace.blink::after {
+  opacity: 1;
+}
