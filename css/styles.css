@@ -1,122 +1,136 @@
-/* Fondo general */
+/* Fondo general azul */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #0077cc;
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-/* Contenedor principal */
-.container {
-  text-align: center;
-  background: rgba(255,255,255,0.1);
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-}
-
-/* Títulos */
-h1, h2 {
-  margin-bottom: 20px;
-}
-
-/* Botones */
-button {
-  background: #ffcc00;
-  border: none;
-  padding: 12px 24px;
-  margin: 10px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
-button:hover {
-  background: #ffaa00;
-}
-.btn-secondary {
-  background: #00cc88;
-  color: #fff;
-}
-.btn-secondary:hover {
-  background: #009966;
-}
-
-/* UI de chat */
-#ui {
-  position: absolute;
-  top: 0;
-  width: 100%;
+  background-color: #007bff;
+  color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  pointer-events: none;
+  justify-content: center;
+  height: 100vh;
 }
 
-.top-bar, .bottom-bar {
-  width: 100%;
+/* Contenedor principal centrado */
+.container {
+  text-align: center;
+  padding: 20px;
+}
+
+/* Botones amarillos grandes */
+button {
+  background-color: #ffcc00;
+  border: none;
+  border-radius: 10px;
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+/* Botones especiales */
+button.termina {
+  background-color: #28a745; /* verde */
+  color: white;
+}
+
+button.parlare {
+  background-color: #ffcc00; /* amarillo */
+  color: black;
+}
+
+button.apri {
+  background-color: #17a2b8; /* celeste */
+  color: white;
+}
+
+/* Layout en chat.html */
+.chat-header {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
   display: flex;
-  justify-content: space-around;
-  padding: 10px;
-  background: rgba(0,0,0,0.5);
-  pointer-events: auto;
+  justify-content: space-between;
+  z-index: 100;
 }
 
-/* Log de chat */
-#chatLog {
-  max-height: 140px;
-  overflow-y: auto;
-  width: 90%;
-  background: rgba(0,0,0,0.4);
-  color: #fff;
-  padding: 5px;
-  border-radius: 5px;
-  font-family: sans-serif;
-}
-
-.msg-user { color: #00ffcc; }
-.msg-bot  { color: #ffff66; }
-.msg-system { color: #ff6666; }
-
-/* Cara Francesco */
-.francesco-face-container {
+.chat-footer {
   position: absolute;
-  top: 90px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 80px;
-  pointer-events: none;
-}
-
-#francescoFace {
-  width: 100%;
-  transition: transform 0.1s;
-  position: relative;
-}
-
-#francescoFace.talking {
-  transform: scaleY(1.2) translateY(2px);
-}
-
-/* Parpadeo */
-#francescoFace.blink::before,
-#francescoFace.blink::after {
-  opacity: 1;
-}
-
-/* Footer con instrucción */
-.footer-msg {
-  position: absolute;
-  bottom: 10px;
+  bottom: 20px;
   width: 100%;
   text-align: center;
-  font-size: 14px;
-  color: #eee;
+  z-index: 100;
+}
+
+.chat-box {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 600px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+  font-size: 16px;
+}
+
+/* Francesco face */
+.francesco-face {
+  display: block;
+  margin: 80px auto 20px auto;
+  width: 150px;
+  height: auto;
+}
+
+/* Lista de escenas */
+.scene-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.scene-item {
+  width: 90%;
+  max-width: 400px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.scene-item:hover {
+  transform: scale(1.03);
+}
+
+.scene-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.scene-item p {
+  background-color: #007bff;
+  color: white;
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
 }

@@ -1,40 +1,32 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <title>Francesco - Chat</title>
-  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-  <link rel="stylesheet" href="/css/styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat con Francesco</title>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <!-- Escena 360 -->
-  <a-scene>
-    <a-assets>
-      <img id="skyTexture" crossorigin="anonymous">
-    </a-assets>
-    <a-sky id="sky" src="#skyTexture" rotation="0 -90 0"></a-sky>
-    <a-camera look-controls="magicWindowTrackingEnabled: true"></a-camera>
-  </a-scene>
-
-  <!-- UI principal -->
-  <div id="ui">
-    <div class="top-bar">
-      <button id="talkBtn">🎤 Parlare</button>
-      <button id="endBtn" class="btn-secondary">❌ Terminare</button>
+  <div class="chat-container">
+    <!-- Cara de Francesco -->
+    <div class="francesco-face">
+      <img src="images/francesco-face.png" alt="Francesco">
     </div>
 
-    <div class="francesco-face-container">
-      <img id="francescoFace" src="/francesco-face.png" alt="Francesco">
+    <!-- Botones superiores -->
+    <div class="chat-top-buttons">
+      <button class="btn-speak" id="speakBtn">🎤 Parlare</button>
+      <button class="btn-exit" onclick="endChat()">❌ Terminare</button>
     </div>
 
-    <div id="chatLog"></div>
+    <!-- Mensajes -->
+    <div id="chat-box" class="chat-box"></div>
 
-    <div class="footer-msg">
-      Di "Ci vediamo Francesco" per uscire
-    </div>
+    <!-- Texto de salida -->
+    <p class="exit-hint">Di "Ci vediamo Francesco" per uscire</p>
   </div>
 
-  <script src="/js/voice.js"></script>
-  <script src="/js/chat.js"></script>
+  <script src="js/voice.js"></script>
+  <script src="js/chat.js"></script>
 </body>
 </html>

@@ -1,33 +1,28 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Livello di apprendimento</title>
-  <link rel="stylesheet" href="/css/styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seleziona Livello</title>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="page page-index">
-  <header>
+<body>
+  <div class="container">
     <h1>Livello di apprendimento</h1>
     <p>Scegli il tuo livello per iniziare</p>
-  </header>
 
-  <main>
-    <div class="level-carousel" id="levelCarousel">
-      <button class="level-bubble" data-level="A1">A1</button>
-      <button class="level-bubble" data-level="A2">A2</button>
-      <button class="level-bubble" data-level="B1">B1</button>
-      <button class="level-bubble" data-level="B2">B2</button>
-      <button class="level-bubble" data-level="C1">C1</button>
-      <button class="level-bubble" data-level="C2">C2</button>
+    <div>
+      <button onclick="selectLevel('A1')">A1</button>
+      <button onclick="selectLevel('A2')">A2</button>
+      <button onclick="selectLevel('B1')">B1</button>
+      <button onclick="selectLevel('B2')">B2</button>
+      <button onclick="selectLevel('C1')">C1</button>
+      <button onclick="selectLevel('C2')">C2</button>
     </div>
 
-    <div class="cta">
-      <button id="continueBtn" class="btn" disabled>Continua</button>
-    </div>
-  </main>
+    <button onclick="goToScenes()">Continua</button>
+  </div>
 
-  <footer><small>Francesco, il tuo amico italiano!</small></footer>
-  <script src="/js/index.js"></script>
+  <script src="js/index.js"></script>
 </body>
 </html>
