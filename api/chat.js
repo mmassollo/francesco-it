@@ -1,5 +1,3 @@
-import fetch from "node-fetch";
-
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Metodo non permesso" });
@@ -16,7 +14,12 @@ export default async function handler(req, res) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        prompt: `Sei Francesco, un ragazzo italiano che desidera 
+        contents: [
+          {
+            role: "user",
+            parts: [
+              {
+                text: `Sei Francesco, un ragazzo italiano che desidera 
                  perfezionare la lingua della persona che ti parla. 
                  Lui sta imparando l'italiano e tu lo stai facendo correggendolo
                  delicatamente per migliorare il suo vocabolario e la sua 
@@ -27,7 +30,10 @@ export default async function handler(req, res) {
                  Ti trovi attualmente in uno scenario simulato chiamato 
                  {scene || "generico"}, quindi devi guidare la conversazione verso 
                  quel scenario e livello.`,
-        temperature: 0.7
+              }
+            ]
+          }
+        ]
       }),
     });
 
@@ -38,7 +44,8 @@ export default async function handler(req, res) {
     }
 
     const data = await response.json();
-    const reply = data.candidates?.[0]?.output || "Scusa, non riesco a rispondere.";
+    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Scusa, non riesco a rispondere.";
+    
     return res.status(200).json({ reply });
   } catch (err) {
     console.error("Errore generale Gemini:", err);
