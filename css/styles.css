@@ -1,74 +1,175 @@
-/* Reset general */
+/* Fondo general */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #007bff;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+
+/* Contenedores */
+.container {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+}
+
+/* Títulos */
+h1 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+p {
+  margin-bottom: 20px;
+  font-size: 1.2em;
+}
+
+/* Botones generales */
+button {
+  background-color: #ffc107;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 5px;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #e0a800;
+}
+
+.btn-main {
+  background-color: #28a745;
+  color: white;
+  margin-top: 20px;
+}
+
+.btn-main:hover {
+  background-color: #218838;
+}
+
+/* Botones en grid */
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* Contenedor de cada escena */
+.scene-item {
+  width: 100%; /* Ocupa todo el espacio de la celda de la grilla */
+  max-width: none; /* Elimina límite máximo para adaptarse a la grilla */
+  border-radius: 10px;
+  overflow: hidden; /* Evita que las imágenes se desborden */
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: transform 0.2s;
+  box-sizing: border-box; /* Incluye padding y border en el cálculo del tamaño */
+}
+
+.scene-item:hover {
+  transform: scale(1.03);
+}
+
+/* Imágenes dentro de cada escena */
+.scene-item img {
+  width: 100%;
+  height: 200px; /* Altura fija para uniformidad */
+  object-fit: cover; /* Recorta las imágenes para que quepan sin distorsión */
+  display: block;
+}
+
+/* Texto debajo de la imagen */
+.scene-item p {
+  background-color: #007bff;
+  color: white;
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Contenedor principal */
+.container {
+  width: 100%;
+  max-width: 600px; /* Límite razonable para pantallas móviles y grandes */
+  padding: 20px;
+  box-sizing: border-box; /* Incluye padding en el cálculo del tamaño */
+}
+
+/* CHAT */
+.chat-container {
+  width: 100%;
+  max-width: 800px;
+  padding: 20px;
+  text-align: center;
+}
+
+.francesco-face img {
+  width: 150px;
+  margin: 10px auto;
+  display: block;
+}
+
+.chat-top-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.btn-speak {
+  background-color: #ffc107;
+}
+
+.btn-exit {
+  background-color: #dc3545;
+  color: white;
+}
+
+.exit-hint {
+  font-style: italic;
+  font-size: 1em;
+  color: #fff;
+  opacity: 0.8;
+}
+
+/* Cara Francesco */
+
+#francescoFace {
+  width: 100%;
+  transition: transform 0.1s;
+  position: relative;
+}
+
+#francescoFace.talking {
+  transform: scaleY(1.2) translateY(2px);
+}
+
+/* Parpadeo */
+#francescoFace.blink::before,
+#francescoFace.blink::after {
+  opacity: 1;
+}
+
+
+/*************************************/
+/* Escena VR ocupa toda la pantalla */
 html, body {
   margin: 0;
   height: 100%;
   width: 100%;
   overflow: hidden;
   background: black;
-  font-family: Arial, sans-serif;
 }
-
-/* --- INDEX Y SCENE --- */
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: linear-gradient(135deg, #007bff, #00c6ff);
-  text-align: center;
-  color: white;
-}
-
-h1 {
-  margin-bottom: 20px;
-}
-
-.levels, .scenes {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 20px;
-}
-
-.level-bubble, .thumb, .btn-main {
-  padding: 12px 20px;
-  border-radius: 12px;
-  border: none;
-  font-size: 1.1em;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.level-bubble {
-  background: #fff;
-  color: #007bff;
-}
-.level-bubble.active {
-  background: #ffc107;
-  color: #000;
-}
-
-.thumb {
-  width: 120px;
-  height: 80px;
-  object-fit: cover;
-  border: 3px solid transparent;
-  border-radius: 10px;
-}
-.thumb.active {
-  border-color: #ffc107;
-}
-
-.btn-main {
-  background: #28a745;
-  color: white;
-}
-.btn-main:disabled {
-  background: #aaa;
-  cursor: not-allowed;
-}
-
-/* --- CHAT PAGE --- */
 
 /* Botón Parla arriba a la izquierda */
 .btn-talk {
@@ -128,14 +229,4 @@ h1 {
   color: white;
   font-style: italic;
   z-index: 10;
-}
-
-/* Animaciones cara */
-.blink {
-  animation: blinkAnim 0.2s linear;
-}
-@keyframes blinkAnim {
-  0% { transform: scaleY(1); }
-  50% { transform: scaleY(0.1); }
-  100% { transform: scaleY(1); }
 }
