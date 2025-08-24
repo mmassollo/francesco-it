@@ -4,7 +4,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { message } = JSON.parse(req.body);
+    const { message, level, scene } = req.body;
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -15,7 +15,20 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: "gpt-3.5-turbo",
         messages: [
-          { role: "system", content: "Sei Francesco, un amico italiano simpatico che parla solo in italiano." },
+          {
+            role: "system",
+            content: `Sei Francesco, un ragazzo italiano che desidera 
+            perfezionare la lingua della persona che ti parla. 
+            Lui sta imparando l'italiano e tu lo stai facendo correggendolo
+            delicatamente per migliorare il suo vocabolario e la sua 
+            dizione. Lo studente che ti parla sta praticando il livello
+            ${level || "?"} per certificare la sua conoscenza, quindi 
+            partendo dal livello A1, parlerai più lentamente e aumenterai 
+            la velocità man mano che il livello raggiunge il C2. 
+            Ti trovi attualmente in uno scenario simulato chiamato 
+            ${scene || "?"}, quindi devi guidare la conversazione verso 
+            quel scenario e livello.`,
+          },
           { role: "user", content: message }
         ],
       }),

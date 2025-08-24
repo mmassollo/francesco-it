@@ -42,7 +42,7 @@ window.addEventListener("DOMContentLoaded", () => {
   }
   const recognizer = new SR();
   recognizer.lang = "it-IT";
-  recognizer.continuous = false;
+  recognizer.continuous = true;
 
   async function handleSpeech(text) {
     pushMsg("Tu", text);
