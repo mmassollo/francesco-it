@@ -12,25 +12,20 @@ window.addEventListener("DOMContentLoaded", () => {
   const skyImg = document.getElementById("skyTexture");
   if (sceneKey && sceneMap[sceneKey]) {
     skyImg.setAttribute("src", sceneMap[sceneKey]);
-  } else {
-    console.error("No se encontró la scena:", sceneKey);
   }
 
   const chatLog = document.getElementById("chatLog");
   const talkBtn = document.getElementById("talkBtn");
-  const endBtn = document.getElementById("endBtn");
   const francescoFace = document.getElementById("francescoFace");
-  const hint = document.getElementById("exitHint");
 
-  function pushMsg(sender, text, cls = "") {
+  function pushMsg(sender, text) {
     const p = document.createElement("p");
-    p.className = cls || (sender === "Tu" ? "msg-user" : "msg-bot");
-    p.textContent = `${sender}: ${text}`;
+    p.innerHTML = `<strong>${sender}:</strong> ${text}`;
     chatLog.appendChild(p);
     chatLog.scrollTop = chatLog.scrollHeight;
   }
 
-  // animación simple de parpadeo
+  // Animación parpadeo
   function startBlinking(faceElem) {
     setInterval(() => {
       faceElem.classList.add("blink");
@@ -39,7 +34,7 @@ window.addEventListener("DOMContentLoaded", () => {
   }
   if (francescoFace) startBlinking(francescoFace);
 
-  // 🔹 STT
+  // STT
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR) {
     alert("Questo browser non supporta SpeechRecognition (prova Chrome)");
@@ -73,7 +68,7 @@ window.addEventListener("DOMContentLoaded", () => {
       speechSynthesis.speak(utter);
     } catch (err) {
       console.error(err);
-      pushMsg("Sistema", "Errore di comunicazione con l'IA", "msg-system");
+      pushMsg("Sistema", "Errore di comunicazione con l'IA");
       francescoFace.classList.remove("talking");
     }
   }
@@ -81,27 +76,12 @@ window.addEventListener("DOMContentLoaded", () => {
   recognizer.onresult = (event) => {
     const text = event.results[event.results.length - 1][0].transcript;
     if (text.toLowerCase().includes("ci vediamo francesco")) {
-      endBtn.click();
+      localStorage.clear();
+      window.location.href = "/index.html";
     } else {
       handleSpeech(text);
     }
   };
 
-  // 🔹 botones
   talkBtn.addEventListener("click", () => recognizer.start());
-
-  endBtn.addEventListener("click", () => {
-    const bye = "Ci vediamo! Torniamo al menu.";
-    pushMsg("Francesco", bye);
-    const utter = new SpeechSynthesisUtterance(bye);
-    utter.lang = "it-IT";
-    utter.onend = () => {
-      localStorage.clear();
-      window.location.href = "/index.html";
-    };
-    speechSynthesis.speak(utter);
-  });
-
-  // mostrar hint
-  if (hint) hint.style.display = "block";
 });
