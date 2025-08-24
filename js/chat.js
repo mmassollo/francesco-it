@@ -9,6 +9,7 @@ const sceneMap = {
 };
 
 window.addEventListener("DOMContentLoaded", () => {
+  // ---- Escena dinámica ----
   const skyImg = document.getElementById("skyTexture");
   if (sceneKey && sceneMap[sceneKey]) {
     skyImg.setAttribute("src", sceneMap[sceneKey]);
@@ -18,7 +19,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const chatLog = document.getElementById("chatLog");
   const talkBtn = document.getElementById("talkBtn");
-  const endBtn = document.getElementById("endBtn");
 
   function pushMsg(sender, text, cls = "") {
     const p = document.createElement("p");
@@ -36,8 +36,8 @@ window.addEventListener("DOMContentLoaded", () => {
         (v) =>
           v.lang.startsWith("it") &&
           (v.name.toLowerCase().includes("child") ||
-           v.name.toLowerCase().includes("ragazzo")) ||
-          v.name.toLowerCase().includes("male") ||
+           v.name.toLowerCase().includes("ragazzo") ||
+           v.name.toLowerCase().includes("male"))
       ) || voices.find((v) => v.lang.startsWith("it"))
     );
   }
@@ -84,17 +84,5 @@ window.addEventListener("DOMContentLoaded", () => {
 
   talkBtn.addEventListener("click", () => {
     recognizer.start();
-  });
-
-  endBtn.addEventListener("click", () => {
-    const bye = "Ci vediamo! Torniamo al menu.";
-    pushMsg("Francesco", bye);
-    const utter = new SpeechSynthesisUtterance(bye);
-    utter.lang = "it-IT";
-    utter.onend = () => {
-      localStorage.clear();
-      window.location.href = "/index.html";
-    };
-    speechSynthesis.speak(utter);
   });
 });

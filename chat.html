@@ -10,13 +10,9 @@
 <body>
   <!-- Escena VR a pantalla completa -->
   <a-scene>
-    <a-sky src="scene.jpeg"></a-sky>
+    <!-- IMPORTANTE: id="skyTexture" para que chat.js lo pueda modificar -->
+    <a-sky id="skyTexture"></a-sky>
   </a-scene>
-
-  <!-- Cara de Francesco -->
-  <!--<div class="francesco-face-container">
-    <img id="francescoFace" src="images/francesco-face.png" alt="Francesco">
-  </div>-->
 
   <!-- Botón hablar arriba a la izquierda -->
   <button id="talkBtn" class="btn-talk">🎤 Parla</button>
