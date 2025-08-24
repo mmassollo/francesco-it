@@ -55,11 +55,7 @@ window.addEventListener("DOMContentLoaded", () => {
     window.SpeechRecognition || window.webkitSpeechRecognition;
   const recognizer = new SpeechRecognition();
   recognizer.lang = "it-IT";
-  recognizer.continuous = true;
-
-  recognizer.onend = () => {
-    recognizer.start();
-  };
+  recognizer.continuous = false;
 
   async function handleSpeech(text) {
     pushMsg("Tu", text);
