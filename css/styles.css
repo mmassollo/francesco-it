@@ -162,15 +162,6 @@ button:hover {
 
 
 /*************************************/
-/* Escena VR ocupa toda la pantalla */
-html, body {
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  background: black;
-}
-
 /* Botón Parla arriba a la izquierda */
 .btn-talk {
   position: absolute;
