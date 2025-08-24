@@ -3,6 +3,8 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Metodo non permesso" });
   }
 
+  console.log("DEBUG OpenAI key:", process.env.OPENAI_API_KEY ? "OK" : "MISSING");
+
   try {
     const { message, level, scene } = req.body;
 
