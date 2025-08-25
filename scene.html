@@ -13,20 +13,20 @@
     <button id="backBtn">Back</button>
     <button id="goBtn" disabled>Start</button>
   </div>
-  <script src="js/data.js"></script>
-  <script src="js/scene.js"></script>
-  <script>
-    const lang = localStorage.getItem("language") || "en";
-    const titles = {
-      it: "Scegli uno scenario",
-      es: "Elige un escenario",
-      en: "Choose a scene",
-      pt: "Escolha um cenário"
-    };
-    document.getElementById("sceneTitle").textContent = titles[lang] || titles.en;
 
+  <script src="js/data.js"></script>
+  <script>
+    const lang = AppStore.getLang();
+    const ui = UIStrings[lang] || UIStrings.en;
+
+    // Títulos y botones traducidos
+    document.getElementById("sceneTitle").textContent = ui.chooseScene;
+    document.getElementById("backBtn").textContent = ui.back;
+    document.getElementById("goBtn").textContent = ui.start;
+
+    // Render dinámico de escenas
     const sceneList = document.getElementById("sceneList");
-    const scenes = window.SceneLocales[lang] || window.SceneLocales.en;
+    const scenes = SceneLocales[lang] || SceneLocales.en;
     sceneList.innerHTML = "";
     Object.entries(scenes).forEach(([key, val]) => {
       const div = document.createElement("div");
@@ -34,6 +34,31 @@
       div.dataset.scene = key;
       div.innerHTML = `<img src="${val.thumb}" alt="${val.label}"><p>${val.label}</p>`;
       sceneList.appendChild(div);
+    });
+
+    // Lógica de selección + habilitar botón
+    const goBtn = document.getElementById("goBtn");
+    const backBtn = document.getElementById("backBtn");
+    let selected = null;
+
+    const thumbs = [...document.querySelectorAll(".scene-item")];
+    thumbs.forEach(t => {
+      t.addEventListener("click", () => {
+        thumbs.forEach(x => x.classList.remove("active"));
+        t.classList.add("active");
+        selected = t.dataset.scene;
+        goBtn.disabled = false;
+      });
+    });
+
+    goBtn.addEventListener("click", () => {
+      if (!selected) return;
+      AppStore.setScene(selected);
+      window.location.href = "/chat.html";
+    });
+
+    backBtn.addEventListener("click", () => {
+      window.location.href = "/level.html";
     });
   </script>
 </body>

@@ -61,9 +61,12 @@
       en: {title: "Select Language", subtitle: "Choose a language to start"},
       pt: {title: "Selecionar idioma", subtitle: "Escolha um idioma para começar"}
     };
-    const t = titles[browserLang] || titles.en;
-    document.getElementById("langTitle").textContent = t.title;
-    document.getElementById("langSubtitle").textContent = t.subtitle;
+    const lang = AppStore.getLang();
+    const ui = UIStrings[lang] || UIStrings.en;
+    
+    document.getElementById("langTitle").textContent = ui.chooseLang;
+    document.getElementById("langSubtitle").textContent = ui.chooseLevel;
+    document.getElementById("continueBtn").textContent = ui.continue;
   </script>
 </body>
 </html>

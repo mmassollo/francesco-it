@@ -33,3 +33,49 @@ window.AppStore = {
   getLang: () => localStorage.getItem("language"),
   clear: () => { ["level","scene","language"].forEach(k=>localStorage.removeItem(k)); }
 };
+
+// UI strings traducidas
+window.UIStrings = {
+  it: {
+    back: "Indietro",
+    start: "Inizia",
+    continue: "Continua",
+    chooseScene: "Scegli uno scenario",
+    chooseLang: "Seleziona la lingua",
+    chooseLevel: "Scegli il tuo livello per iniziare"
+  },
+  es: {
+    back: "Atrás",
+    start: "Comenzar",
+    continue: "Continuar",
+    chooseScene: "Elige un escenario",
+    chooseLang: "Selecciona idioma",
+    chooseLevel: "Elige tu nivel para comenzar"
+  },
+  en: {
+    back: "Back",
+    start: "Start",
+    continue: "Continue",
+    chooseScene: "Choose a scene",
+    chooseLang: "Select Language",
+    chooseLevel: "Choose your level to start"
+  },
+  pt: {
+    back: "Voltar",
+    start: "Começar",
+    continue: "Continuar",
+    chooseScene: "Escolha um cenário",
+    chooseLang: "Selecionar idioma",
+    chooseLevel: "Escolha o seu nível para começar"
+  }
+};
+
+window.AppStore = {
+  setLevel: (lvl) => localStorage.setItem("level", lvl),
+  getLevel: () => localStorage.getItem("level"),
+  setScene: (key) => localStorage.setItem("scene", key),
+  getScene: () => localStorage.getItem("scene"),
+  setLang: (lng) => localStorage.setItem("language", lng),
+  getLang: () => localStorage.getItem("language") || (navigator.language || "en").slice(0,2),
+  clear: () => { ["level","scene","language"].forEach(k=>localStorage.removeItem(k)); }
+};

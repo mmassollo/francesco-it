@@ -32,9 +32,14 @@
       en: {title:"Learning Level", subtitle:"Choose your level to start"},
       pt: {title:"Nível de aprendizagem", subtitle:"Escolha o seu nível para começar"}
     };
-    const t = titles[lang] || titles.en;
-    document.getElementById("levelTitle").textContent = t.title;
-    document.getElementById("levelSubtitle").textContent = t.subtitle;
+
+    const lang = AppStore.getLang();
+    const ui = UIStrings[lang] || UIStrings.en;
+    
+    document.getElementById("levelTitle").textContent = ui.chooseLevel;
+    document.getElementById("levelSubtitle").textContent = ui.chooseLevel;
+    document.getElementById("continueBtn").textContent = ui.continue;
+
   </script>
 </body>
 </html>
