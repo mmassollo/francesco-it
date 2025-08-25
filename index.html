@@ -1,28 +1,69 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Seleziona Livello</title>
+  <title>Select Language</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <div class="container">
-    <h1>Livello di apprendimento</h1>
-    <p>Scegli il tuo livello per iniziare</p>
+    <h1 id="langTitle">Select your language</h1>
+    <p id="langSubtitle">Choose a language to start</p>
 
     <div class="button-grid">
-      <button class="level-bubble" data-level="A1">A1</button>
-      <button class="level-bubble" data-level="A2">A2</button>
-      <button class="level-bubble" data-level="B1">B1</button>
-      <button class="level-bubble" data-level="B2">B2</button>
-      <button class="level-bubble" data-level="C1">C1</button>
-      <button class="level-bubble" data-level="C2">C2</button>
+      <div class="scene-item thumb" data-lang="it">
+        <img src="images/flags/italian.png" alt="Italiano">
+        <p>Italiano</p>
+      </div>
+      <div class="scene-item thumb" data-lang="es">
+        <img src="images/flags/spanish.png" alt="Español">
+        <p>Español</p>
+      </div>
+      <div class="scene-item thumb" data-lang="en">
+        <img src="images/flags/english.png" alt="English">
+        <p>English</p>
+      </div>
+      <div class="scene-item thumb" data-lang="pt">
+        <img src="images/flags/portuguese.png" alt="Português">
+        <p>Português</p>
+      </div>
     </div>
 
-    <button id="continueBtn" class="btn-main">Continua</button>
+    <button id="continueBtn" class="btn-main" disabled>Continue</button>
   </div>
 
-  <script src="js/index.js"></script>
+  <script>
+    const thumbs = [...document.querySelectorAll(".scene-item")];
+    const btn = document.getElementById("continueBtn");
+    let selected = null;
+
+    thumbs.forEach(t => {
+      t.addEventListener("click", () => {
+        thumbs.forEach(x => x.classList.remove("active"));
+        t.classList.add("active");
+        selected = t.dataset.lang;
+        btn.disabled = false;
+      });
+    });
+
+    btn.addEventListener("click", () => {
+      if (!selected) return;
+      localStorage.setItem("language", selected);
+      window.location.href = "/level.html";
+    });
+
+    // Títulos adaptados al navegador
+    const browserLang = (navigator.language || "en").slice(0,2);
+    const titles = {
+      it: {title: "Seleziona la lingua", subtitle: "Scegli una lingua per iniziare"},
+      es: {title: "Selecciona idioma", subtitle: "Elige un idioma para empezar"},
+      en: {title: "Select Language", subtitle: "Choose a language to start"},
+      pt: {title: "Selecionar idioma", subtitle: "Escolha um idioma para começar"}
+    };
+    const t = titles[browserLang] || titles.en;
+    document.getElementById("langTitle").textContent = t.title;
+    document.getElementById("langSubtitle").textContent = t.subtitle;
+  </script>
 </body>
 </html>

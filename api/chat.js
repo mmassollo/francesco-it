@@ -1,27 +1,69 @@
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Metodo non permesso" });
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
   try {
-    // Aquí está la corrección: ya no necesitas JSON.parse()
-    const { message, level, scene } = req.body;
+    const { message, level, scene, language } = req.body;
 
-    const prompt = `Sei Francesco, un ragazzo italiano di 25 anni, amichevole e disponibile. Il tuo compito è conversare in italiano con uno studente di italiano.
+    const personas = {
+      it: { name: "Francesco", langName: "italiano", fallback: "Scusa, non riesco a rispondere.", err: "Errore di comunicazione con l'IA" },
+      es: { name: "Francisco", langName: "español", fallback: "Lo siento, no puedo responder.", err: "Error de comunicación con la IA" },
+      en: { name: "Frank",     langName: "English",  fallback: "Sorry, I can’t respond.", err: "Communication error with AI" },
+      pt: { name: "Francisco", langName: "português", fallback: "Desculpa, não consigo responder.", err: "Erro de comunicação com a IA" }
+    };
 
-    **Regole della conversazione:**
-    1. **Lingua:** Rispondi SEMPRE e solo in italiano.
-    2. **Personalità:** Conversa come un amico. Sii naturale, usa un linguaggio colloquiale e frasi brevi. Non agire come un insegnante e non dare spiegazioni grammaticali complesse.
-    3. **Correzione:** Se lo studente commette un errore, correggilo gentilmente e in modo naturale all'interno della tua risposta. Ad esempio, se dice "io ha fame", rispondi "Ah, io ho molta fame anch'io! Cosa mangiamo?".
-    4. **Risposte:** Le tue risposte devono essere brevi, al massimo 1 o 2 frasi. Non usare elenchi o istruzioni.
-    5. **Contesto:** Il tuo discorso deve adattarsi al livello di italiano dello studente e allo scenario in cui vi trovate.
-        * **Livello dello studente:** ${level || "A1"}
-        * **Scenario:** ${scene || "città"}
-    
-    **Conversazione:**
-    Studente: ${message}
-    Francesco:`;
-    
+    const lang = personas[language] ? language : "it";
+    const { name, langName, fallback, err } = personas[lang];
+
+    const sceneContexts = {
+      albergo: {
+        it: "Siete in un albergo in Italia, puoi parlare di check-in, vacanze e viaggi.",
+        es: "Están en un hotel, pueden hablar de la reserva, de viajes o vacaciones.",
+        en: "You are in a hotel, you can talk about check-in, travels and holidays.",
+        pt: "Vocês estão em um hotel, podem falar sobre reservas, viagens e férias."
+      },
+      citta: {
+        it: "Siete in città, potete parlare di negozi, strade, persone o mezzi di trasporto.",
+        es: "Están en la ciudad, pueden hablar de tiendas, calles, gente o transporte.",
+        en: "You are in the city, you can talk about shops, streets, people, or transportation.",
+        pt: "Vocês estão na cidade, podem falar de lojas, ruas, pessoas ou transporte."
+      },
+      ristorante: {
+        it: "Siete in un ristorante, potete parlare di cibo, ordinazioni, menu e gusti.",
+        es: "Están en un restaurante, pueden hablar de comida, pedidos, menú y gustos.",
+        en: "You are in a restaurant, you can talk about food, ordering, menus, and tastes.",
+        pt: "Vocês estão em um restaurante, podem falar de comida, pedidos, cardápio e gostos."
+      },
+      spiaggia: {
+        it: "Siete in spiaggia, potete parlare di mare, sole, vacanze e attività.",
+        es: "Están en la playa, pueden hablar del mar, sol, vacaciones y actividades.",
+        en: "You are at the beach, you can talk about the sea, sun, holidays and activities.",
+        pt: "Vocês estão na praia, podem falar do mar, sol, férias e atividades."
+      }
+    };
+
+    const sceneContext = (sceneContexts[scene] && sceneContexts[scene][lang]) || "";
+
+    const prompt = `
+You are ${name}, a friendly ${langName} young person (about 25 years old).
+Your task is to have a casual conversation with the student in **${langName}**.
+
+**Rules of conversation:**
+1. **Language:** Always and only respond in ${langName}.
+2. **Personality:** Be natural and friendly, like a close friend. Use colloquial language and short sentences. Do not act as a teacher and do not give grammar explanations.
+3. **Correction:** If the student makes a mistake, correct it gently and naturally within your reply.
+4. **Responses:** Keep answers short, maximum 1–2 sentences. No lists or long explanations.
+5. **Context adaptation:** Adjust your conversation to:
+   - **Student level:** ${level || "A1"}
+   - **Scenario:** ${scene || "città"} → ${sceneContext}
+
+**Important:** Try to naturally steer the conversation towards themes related to the scenario above.
+
+**Conversation so far:**
+Student: ${message}
+${name}:`;
+
     const response = await fetch(
       "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=" +
         process.env.GEMINI_API_KEY,
@@ -32,11 +74,7 @@ export default async function handler(req, res) {
           contents: [
             {
               role: "user",
-              parts: [
-                {
-                  text: prompt
-                }
-              ]
+              parts: [{ text: prompt }]
             }
           ]
         })
@@ -44,19 +82,18 @@ export default async function handler(req, res) {
     );
 
     if (!response.ok) {
-      const err = await response.text();
-      console.error("Errore API Gemini:", err);
-      return res.status(500).json({ error: "Errore nella richiesta a Gemini" });
+      const errText = await response.text();
+      console.error("Gemini API error:", errText);
+      return res.status(500).json({ error: err });
     }
 
     const data = await response.json();
     const reply =
-      data.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "Scusa, non riesco a rispondere.";
+      data.candidates?.[0]?.content?.parts?.[0]?.text || fallback;
 
     return res.status(200).json({ reply });
   } catch (err) {
-    console.error("Errore generale:", err);
-    res.status(500).json({ error: "Errore di comunicazione con l'IA" });
+    console.error("General error:", err);
+    res.status(500).json({ error: "Unexpected server error" });
   }
 }

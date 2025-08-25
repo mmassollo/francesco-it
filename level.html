@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Level</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1 id="levelTitle">Select your level</h1>
+    <p id="levelSubtitle">Choose your learning level</p>
+
+    <div class="button-grid">
+      <button class="level-bubble" data-level="A1">A1</button>
+      <button class="level-bubble" data-level="A2">A2</button>
+      <button class="level-bubble" data-level="B1">B1</button>
+      <button class="level-bubble" data-level="B2">B2</button>
+      <button class="level-bubble" data-level="C1">C1</button>
+      <button class="level-bubble" data-level="C2">C2</button>
+    </div>
+
+    <button id="continueBtn" class="btn-main" disabled>Continue</button>
+  </div>
+
+  <script src="js/index.js"></script>
+  <script>
+    const lang = localStorage.getItem("language") || "en";
+    const titles = {
+      it: {title:"Livello di apprendimento", subtitle:"Scegli il tuo livello per iniziare"},
+      es: {title:"Nivel de aprendizaje", subtitle:"Elige tu nivel para comenzar"},
+      en: {title:"Learning Level", subtitle:"Choose your level to start"},
+      pt: {title:"Nível de aprendizagem", subtitle:"Escolha o seu nível para começar"}
+    };
+    const t = titles[lang] || titles.en;
+    document.getElementById("levelTitle").textContent = t.title;
+    document.getElementById("levelSubtitle").textContent = t.subtitle;
+  </script>
+</body>
+</html>

@@ -1,35 +1,40 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scegli Scenario</title>
-  <link rel="stylesheet" href="/css/styles.css">
+  <title>Select Scene</title>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <div class="container">
-    <h1>Scegli uno scenario</h1>
-    <div class="scene-list button-grid">
-      <div class="scene-item thumb" data-scene="citta">
-        <img src="/images/thumbnails/citta-thumb.jpg" alt="Città">
-        <p>Città</p>
-      </div>
-      <div class="scene-item thumb" data-scene="colosseo">
-        <img src="/images/thumbnails/colosseo-thumb.jpg" alt="Colosseo">
-        <p>Colosseo</p>
-      </div>
-      <div class="scene-item thumb" data-scene="albergo">
-        <img src="/images/thumbnails/albergo-thumb.jpg" alt="Albergo">
-        <p>Albergo</p>
-      </div>
-      <div class="scene-item thumb" data-scene="spiaggia">
-        <img src="/images/thumbnails/spiaggia-thumb.jpg" alt="Spiaggia">
-        <p>Spiaggia</p>
-      </div>
-    </div>
-    <button id="backBtn">Indietro</button>
-    <button id="goBtn" disabled>Inizia</button>
+    <h1 id="sceneTitle">Choose a scene</h1>
+    <div class="scene-list button-grid" id="sceneList"></div>
+    <button id="backBtn">Back</button>
+    <button id="goBtn" disabled>Start</button>
   </div>
-  <script src="/js/scene.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/scene.js"></script>
+  <script>
+    const lang = localStorage.getItem("language") || "en";
+    const titles = {
+      it: "Scegli uno scenario",
+      es: "Elige un escenario",
+      en: "Choose a scene",
+      pt: "Escolha um cenário"
+    };
+    document.getElementById("sceneTitle").textContent = titles[lang] || titles.en;
+
+    const sceneList = document.getElementById("sceneList");
+    const scenes = window.SceneLocales[lang] || window.SceneLocales.en;
+    sceneList.innerHTML = "";
+    Object.entries(scenes).forEach(([key, val]) => {
+      const div = document.createElement("div");
+      div.className = "scene-item thumb";
+      div.dataset.scene = key;
+      div.innerHTML = `<img src="${val.thumb}" alt="${val.label}"><p>${val.label}</p>`;
+      sceneList.appendChild(div);
+    });
+  </script>
 </body>
 </html>

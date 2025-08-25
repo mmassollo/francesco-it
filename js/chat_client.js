@@ -1,12 +1,22 @@
 const level = localStorage.getItem("level");
 const sceneKey = (localStorage.getItem("scene") || "").toLowerCase();
+const language = localStorage.getItem("language") || "it";
 
 const sceneMap = {
   citta: "/images/scenes/citta-360.jpg",
-  colosseo: "/images/scenes/colosseo-360.jpg",
+  ristorante: "/images/scenes/ristorante-360.jpg",
   albergo: "/images/scenes/albergo-360.jpg",
   spiaggia: "/images/scenes/spiaggia-360.jpg"
 };
+
+// Etiquetas según idioma
+const Labels = {
+  it: { user: "Tu", bot: "Francesco", sys: "Sistema", err: "Errore di comunicazione con l'IA" },
+  es: { user: "Tú", bot: "Francisco", sys: "Sistema", err: "Error de comunicación con la IA" },
+  en: { user: "You", bot: "Frank", sys: "System", err: "Communication error with AI" },
+  pt: { user: "Você", bot: "Francisco", sys: "Sistema", err: "Erro de comunicação com a IA" }
+};
+const L = Labels[language] || Labels.it;
 
 window.addEventListener("DOMContentLoaded", () => {
   // ---- Escena dinámica ----
@@ -14,7 +24,7 @@ window.addEventListener("DOMContentLoaded", () => {
   if (sceneKey && sceneMap[sceneKey]) {
     skyImg.setAttribute("src", sceneMap[sceneKey]);
   } else {
-    console.error("Scena non trovata:", sceneKey);
+    console.error("Scene not found:", sceneKey);
   }
 
   const chatLog = document.getElementById("chatLog");
@@ -22,30 +32,22 @@ window.addEventListener("DOMContentLoaded", () => {
 
   function pushMsg(sender, text, cls = "") {
     const p = document.createElement("p");
-    p.className = cls || (sender === "Tu" ? "msg-user" : "msg-bot");
+    p.className = cls || (sender === L.user ? "msg-user" : "msg-bot");
     p.textContent = `${sender}: ${text}`;
     chatLog.appendChild(p);
     chatLog.scrollTop = chatLog.scrollHeight;
   }
 
   // ---- Sintesi vocale ----
-  function getItalianVoice() {
+  function getVoice() {
     const voices = speechSynthesis.getVoices();
-    return (
-      voices.find(
-        (v) =>
-          v.lang.startsWith("it") &&
-          (v.name.toLowerCase().includes("child") ||
-           v.name.toLowerCase().includes("ragazzo") ||
-           v.name.toLowerCase().includes("male"))
-      ) || voices.find((v) => v.lang.startsWith("it"))
-    );
+    return voices.find((v) => v.lang.startsWith(language)) || voices[0];
   }
 
   function speak(text) {
     const utter = new SpeechSynthesisUtterance(text);
-    utter.lang = "it-IT";
-    const voice = getItalianVoice();
+    utter.lang = language;
+    const voice = getVoice();
     if (voice) utter.voice = voice;
     speechSynthesis.speak(utter);
   }
@@ -54,26 +56,26 @@ window.addEventListener("DOMContentLoaded", () => {
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
   const recognizer = new SpeechRecognition();
-  recognizer.lang = "it-IT";
+  recognizer.lang = language;
   recognizer.continuous = false;
 
   async function handleSpeech(text) {
-    pushMsg("Tu", text);
+    pushMsg(L.user, text);
 
     try {
       const resp = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text, level, scene: sceneKey })
+        body: JSON.stringify({ message: text, level, scene: sceneKey, language })
       });
       const data = await resp.json();
-      let reply = data.reply || "Scusa, non riesco a rispondere.";
-      pushMsg("Francesco", reply);
+      let reply = data.reply || L.err;
+      pushMsg(L.bot, reply);
       speechSynthesis.cancel();
       speak(reply);
     } catch (err) {
       console.error(err);
-      pushMsg("Sistema", "Errore di comunicazione con l'IA", "msg-system");
+      pushMsg(L.sys, L.err, "msg-system");
     }
   }
 
