@@ -42,7 +42,8 @@ window.UIStrings = {
     continue: "Continua",
     chooseScene: "Scegli uno scenario",
     chooseLang: "Seleziona la lingua",
-    chooseLevel: "Scegli il tuo livello per iniziare"
+    chooseLevel: "Scegli il tuo livello per iniziare",
+    talk: "Parla"
   },
   es: {
     back: "Atrás",
@@ -50,7 +51,8 @@ window.UIStrings = {
     continue: "Continuar",
     chooseScene: "Elige un escenario",
     chooseLang: "Selecciona idioma",
-    chooseLevel: "Elige tu nivel para comenzar"
+    chooseLevel: "Elige tu nivel para comenzar",
+    talk: "Hablar"
   },
   en: {
     back: "Back",
@@ -58,7 +60,8 @@ window.UIStrings = {
     continue: "Continue",
     chooseScene: "Choose a scene",
     chooseLang: "Select Language",
-    chooseLevel: "Choose your level to start"
+    chooseLevel: "Choose your level to start",
+    talk: "Speak"
   },
   pt: {
     back: "Voltar",
@@ -66,7 +69,8 @@ window.UIStrings = {
     continue: "Continuar",
     chooseScene: "Escolha um cenário",
     chooseLang: "Selecionar idioma",
-    chooseLevel: "Escolha o seu nível para começar"
+    chooseLevel: "Escolha o seu nível para começar",
+    talk: "Falar"
   }
 };
 

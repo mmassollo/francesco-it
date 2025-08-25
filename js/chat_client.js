@@ -2,6 +2,16 @@ const level = localStorage.getItem("level");
 const sceneKey = (localStorage.getItem("scene") || "").toLowerCase();
 const language = localStorage.getItem("language") || "it";
 
+// Mapear códigos BCP-47 para STT/TTS
+const LangCodes = {
+  it: "it-IT",
+  es: "es-ES",
+  en: "en-US",
+  pt: "pt-BR"
+};
+const langCode = LangCodes[language] || "it-IT";
+
+// Escenas
 const sceneMap = {
   citta: "/images/scenes/citta-360.jpg",
   ristorante: "/images/scenes/ristorante-360.jpg",
@@ -10,12 +20,6 @@ const sceneMap = {
 };
 
 // Etiquetas según idioma
-const Labels = {
-  it: { user: "Tu", bot: "Francesco", sys: "Sistema", err: "Errore di comunicazione con l'IA" },
-  es: { user: "Tú", bot: "Francisco", sys: "Sistema", err: "Error de comunicación con la IA" },
-  en: { user: "You", bot: "Frank", sys: "System", err: "Communication error with AI" },
-  pt: { user: "Você", bot: "Francisco", sys: "Sistema", err: "Erro de comunicação com a IA" }
-};
 const L = Labels[language] || Labels.it;
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -23,8 +27,6 @@ window.addEventListener("DOMContentLoaded", () => {
   const skyImg = document.getElementById("skyTexture");
   if (sceneKey && sceneMap[sceneKey]) {
     skyImg.setAttribute("src", sceneMap[sceneKey]);
-  } else {
-    console.error("Scene not found:", sceneKey);
   }
 
   const chatLog = document.getElementById("chatLog");
@@ -38,25 +40,24 @@ window.addEventListener("DOMContentLoaded", () => {
     chatLog.scrollTop = chatLog.scrollHeight;
   }
 
-  // ---- Sintesi vocale ----
+  // ---- Sintetizador de voz ----
   function getVoice() {
     const voices = speechSynthesis.getVoices();
-    return voices.find((v) => v.lang.startsWith(language)) || voices[0];
+    return voices.find((v) => v.lang === langCode) || voices.find((v) => v.lang.startsWith(language)) || voices[0];
   }
 
   function speak(text) {
     const utter = new SpeechSynthesisUtterance(text);
-    utter.lang = language;
+    utter.lang = langCode;
     const voice = getVoice();
     if (voice) utter.voice = voice;
     speechSynthesis.speak(utter);
   }
 
-  // ---- Riconoscimento vocale ----
-  const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
+  // ---- Reconocimiento de voz ----
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   const recognizer = new SpeechRecognition();
-  recognizer.lang = language;
+  recognizer.lang = langCode;
   recognizer.continuous = false;
 
   async function handleSpeech(text) {
