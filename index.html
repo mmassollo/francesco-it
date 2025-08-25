@@ -13,26 +13,23 @@
 
     <div class="button-grid">
       <div class="scene-item thumb" data-lang="it">
-        <img src="images/flags/italian.png" alt="Italiano">
-        <p>Italiano</p>
+        <img src="images/flags/italian.png" alt="Italiano"><p>Italiano</p>
       </div>
       <div class="scene-item thumb" data-lang="es">
-        <img src="images/flags/spanish.png" alt="Español">
-        <p>Español</p>
+        <img src="images/flags/spanish.png" alt="Español"><p>Español</p>
       </div>
       <div class="scene-item thumb" data-lang="en">
-        <img src="images/flags/english.png" alt="English">
-        <p>English</p>
+        <img src="images/flags/english.png" alt="English"><p>English</p>
       </div>
       <div class="scene-item thumb" data-lang="pt">
-        <img src="images/flags/portuguese.png" alt="Português">
-        <p>Português</p>
+        <img src="images/flags/portuguese.png" alt="Português"><p>Português</p>
       </div>
     </div>
 
     <button id="continueBtn" class="btn-main" disabled>Continue</button>
   </div>
 
+  <script src="js/data.js"></script>
   <script>
     const thumbs = [...document.querySelectorAll(".scene-item")];
     const btn = document.getElementById("continueBtn");
@@ -49,24 +46,16 @@
 
     btn.addEventListener("click", () => {
       if (!selected) return;
-      localStorage.setItem("language", selected);
+      AppStore.setLang(selected);
       window.location.href = "/level.html";
     });
 
-    // Títulos adaptados al navegador
-    const browserLang = (navigator.language || "en").slice(0,2);
-    const titles = {
-      it: {title: "Seleziona la lingua", subtitle: "Scegli una lingua per iniziare"},
-      es: {title: "Selecciona idioma", subtitle: "Elige un idioma para empezar"},
-      en: {title: "Select Language", subtitle: "Choose a language to start"},
-      pt: {title: "Selecionar idioma", subtitle: "Escolha um idioma para começar"}
-    };
+    // Traducción de textos
     const lang = AppStore.getLang();
     const ui = UIStrings[lang] || UIStrings.en;
-    
     document.getElementById("langTitle").textContent = ui.chooseLang;
-    document.getElementById("langSubtitle").textContent = ui.chooseLevel;
-    document.getElementById("continueBtn").textContent = ui.continue;
+    document.getElementById("langSubtitle").textContent = ui.chooseLang;
+    btn.textContent = ui.continue;
   </script>
 </body>
 </html>

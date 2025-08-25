@@ -23,23 +23,14 @@
     <button id="continueBtn" class="btn-main" disabled>Continue</button>
   </div>
 
-  <script src="js/index.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/level.js"></script>
   <script>
-    const lang = localStorage.getItem("language") || "en";
-    const titles = {
-      it: {title:"Livello di apprendimento", subtitle:"Scegli il tuo livello per iniziare"},
-      es: {title:"Nivel de aprendizaje", subtitle:"Elige tu nivel para comenzar"},
-      en: {title:"Learning Level", subtitle:"Choose your level to start"},
-      pt: {title:"Nível de aprendizagem", subtitle:"Escolha o seu nível para começar"}
-    };
-
     const lang = AppStore.getLang();
     const ui = UIStrings[lang] || UIStrings.en;
-    
     document.getElementById("levelTitle").textContent = ui.chooseLevel;
     document.getElementById("levelSubtitle").textContent = ui.chooseLevel;
     document.getElementById("continueBtn").textContent = ui.continue;
-
   </script>
 </body>
 </html>

@@ -14,6 +14,6 @@ bubbles.forEach(b => {
 
 btn.addEventListener("click", () => {
   if (!selected) return;
-  localStorage.setItem("level", selected);
+  AppStore.setLevel(selected);   // ✅ usamos AppStore en vez de localStorage
   window.location.href = "/scene.html";
 });

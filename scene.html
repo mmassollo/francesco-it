@@ -16,15 +16,14 @@
 
   <script src="js/data.js"></script>
   <script>
+  document.addEventListener("DOMContentLoaded", () => {
     const lang = AppStore.getLang();
     const ui = UIStrings[lang] || UIStrings.en;
 
-    // Títulos y botones traducidos
     document.getElementById("sceneTitle").textContent = ui.chooseScene;
     document.getElementById("backBtn").textContent = ui.back;
     document.getElementById("goBtn").textContent = ui.start;
 
-    // Render dinámico de escenas
     const sceneList = document.getElementById("sceneList");
     const scenes = SceneLocales[lang] || SceneLocales.en;
     sceneList.innerHTML = "";
@@ -36,7 +35,6 @@
       sceneList.appendChild(div);
     });
 
-    // Lógica de selección + habilitar botón
     const goBtn = document.getElementById("goBtn");
     const backBtn = document.getElementById("backBtn");
     let selected = null;
@@ -60,6 +58,7 @@
     backBtn.addEventListener("click", () => {
       window.location.href = "/level.html";
     });
+  });
   </script>
 </body>
 </html>
